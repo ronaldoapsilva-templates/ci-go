@@ -1,6 +1,6 @@
 name: ci-golang-workflow # name of work flow
 on: [push] # it will started when push it
-jogs:
+jobs:
   check-application: # name of jog
     runs-on: ubuntu-latest # where want to run the application
     steps: # the steps required when execute it

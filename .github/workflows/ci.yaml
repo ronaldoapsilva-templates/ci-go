@@ -8,5 +8,5 @@ jobs:
       - uses: actions/setup-go@v2 # prepara o ambiente do go - https://github.com/actions/setup-go
         with: # isso vai ver parâmetro para a action
           go-version: 1.15  # versão do go que vai usar
-      - run: got test # run to run commands
+      - run: go test # run to run commands
       - run: go run math.go

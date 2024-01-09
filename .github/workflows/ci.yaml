@@ -6,10 +6,14 @@ on: # it will started when push it
 jobs:
   check-application: # name of jog
     runs-on: ubuntu-latest # where want to run the application
+    strategy:
+      matrix:
+        go: ['1.14', '1.15']
+
     steps: # the steps required when execute it
       - uses: actions/checkout@v2 # uses for action - pega os dados que acaba de subir, e vai abaixar para o ubuntu https://github.com/actions/checkout
       - uses: actions/setup-go@v2 # prepara o ambiente do go - https://github.com/actions/setup-go
         with: # isso vai ver parâmetro para a action
-          go-version: 1.15  # versão do go que vai usar
+          go-version: ${{ matrix.go }}
       - run: go test # run to run commands
       - run: go run math.go

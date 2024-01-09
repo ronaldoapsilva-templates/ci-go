@@ -4,16 +4,23 @@ on: # it will started when push it
     branches:
       - develop
 jobs:
-  check-application: # name of jog
+  check-application: # name of jog.
     runs-on: ubuntu-latest # where want to run the application
-    strategy:
-      matrix:
-        go: ['1.14', '1.15']
-
     steps: # the steps required when execute it
       - uses: actions/checkout@v2 # uses for action - pega os dados que acaba de subir, e vai abaixar para o ubuntu https://github.com/actions/checkout
       - uses: actions/setup-go@v2 # prepara o ambiente do go - https://github.com/actions/setup-go
         with: # isso vai ver parâmetro para a action
-          go-version: ${{ matrix.go }}
+          go-version: 1.15  # versão do go que vai usar
       - run: go test # run to run commands
       - run: go run math.go
+      # https://github.com/marketplace/actions/build-and-push-docker-images
+      - name: Set up QEMU # set up do docker para funcionar em diversas arquiqueturar
+        uses: docker/setup-qemu-action@v3 #https://github.com/docker/setup-qemu-action
+      - name: Set up Docker Buildx # f
+        uses: docker/setup-buildx-action@v3 #https://github.com/docker/setup-buildx-action
+      - name: Build and push # fazer build
+        id: docker_build
+        uses: docker/build-push-action@v5
+        with:
+          push: false
+          tags: ronaldoapsilva85/ci-go:latest        
